@@ -3,14 +3,16 @@ import sys, os
 from collections import namedtuple
 from AbstractLog import AbstractLogsParser
 
-Entry = namedtuple("Entry", ("test", "result", "result_type"))
-list =[]
+import pandas as pd
+from fpdf import FPDF
+
+
 
 class MyXmlParser(AbstractLogsParser):
-# Different test statuses
-    # TEST_RES_PASS = 0
-    # TEST_RES_FAIL = 1
-    # TEST_RES_SKIP = 2
+
+    Entry = namedtuple("Test", ("test", "result", "result_type"))
+    list =[]
+
     def __init__(self, logs_extension):
         """
         Base class constructor.
@@ -43,20 +45,72 @@ class MyXmlParser(AbstractLogsParser):
         Type of results to return.
         """
         count = 0
-        for i in list:
+        for i in self.list:
             if i[2] == result_type:
                 count+=1
         return count
-        # return -1
 
 
     def generate_detailed_report(self):
         """
         Generates detailed report on each test suite.
         """
-        raise Exception("generate_detailed_report is not implemented")
+        T_pass = self.get_result_by_type(self.TEST_RES_PASS)
+        T_skip = self.get_result_by_type(self.TEST_RES_SKIP)
+        T_fail = self.get_result_by_type(self.TEST_RES_FAIL)
+        T_total = T_pass + T_fail + T_skip
 
+        df = pd.DataFrame()
+        ID = []
+        res =[]
 
+        for i in self.list:
+            ID.append(i[0])
+            res.append(i[1])
+        df['Test ID'] = ID
+        df['Test result'] = res
+
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_xy(0, 0)
+        pdf.set_font('arial', 'B', 16)
+        pdf.cell(60)
+        pdf.cell(75, 10, "Results of the tested software", 0, 2, 'C')
+        pdf.cell(90, 10, " ", 0, 2, 'C')
+        pdf.cell(-10)
+        pdf.cell(50, 10, 'Test ID', 1, 0, 'C')
+        pdf.cell(40, 10, 'Test results', 1, 2, 'C')
+        pdf.cell(-50)
+        pdf.set_font('arial', '', 12)
+
+        for i in range(0, len(df)):
+            pdf.cell(50, 10, '%s' % (df['Test ID'].iloc[i]), 1, 0, 'C')
+            pdf.cell(40, 10, '%s' % (str(df['Test result'].iloc[i])), 1, 2, 'C')
+            pdf.cell(-50)
+
+        pdf.cell(90, 10, " ", 0, 2, 'C')
+        pdf.cell(2)
+        pdf.cell(50, 10, 'Result type', 1, 0, 'C')
+        pdf.cell(40, 10, 'Number', 1, 0, 'C')
+        pdf.cell(40, 10, 'Percentage %', 1, 2, 'C')
+        pdf.cell(-90)
+        pdf.set_font('arial', '', 12)
+        pdf.cell(50, 10, 'Passed', 1, 0, 'C')
+        pdf.cell(40, 10, '%s' % (str(T_pass)), 1, 0, 'C')
+        pdf.cell(40, 10, '%s' % (str(round(T_pass*100.0/T_total,2))), 1, 2, 'C')
+        pdf.cell(-90)
+        pdf.cell(50, 10, 'Skipped', 1, 0, 'C')
+        pdf.cell(40, 10, '%s' % (str(T_skip)), 1, 0, 'C')
+        pdf.cell(40, 10, '%s' % (str(round(T_skip*100.0/T_total,2))), 1, 2, 'C')
+        pdf.cell(-90)
+        pdf.cell(50, 10, 'Failed', 1, 0, 'C')
+        pdf.cell(40, 10, '%s' % (str(T_fail)), 1, 0, 'C')
+        pdf.cell(40, 10, '%s' % (str(round(T_fail*100.0/T_total,2))), 1, 2, 'C')
+
+        pdf.output('test.pdf', 'F')
+
+        print(df)
+        # raise Exception("generate_detailed_report is not implemented")
 
 
     def process_logs(self, folder):
@@ -84,15 +138,21 @@ class MyXmlParser(AbstractLogsParser):
                             result = child.get('result')
                             type = self.switch(result)
                             print(name, result, type)
-                            data = Entry(test=name,result=result, result_type = type)
-                            list.append(data)
-        for i in list:
+                            data = self.Entry(test=name,result=result, result_type = type)
+                            self.list.append(data)
+        for i in self.list:
             print(i)
 
 
 def main():
     my_parser = MyXmlParser("xml")
     my_parser.process_logs('.')
-
+    a = my_parser.get_result_by_type(my_parser.TEST_RES_PASS)
+    b = my_parser.get_result_by_type(my_parser.TEST_RES_SKIP)
+    c = my_parser.get_result_by_type(my_parser.TEST_RES_FAIL)
+    print "number of passed test is: " ,a,  "\n"
+    print "number of skipped test is: " ,b,  "\n"
+    print "number of failed test is: " ,c,  "\n"
+    my_parser.generate_detailed_report()
 if __name__ == '__main__':
     main()
