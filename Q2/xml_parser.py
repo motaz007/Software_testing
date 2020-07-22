@@ -1,15 +1,16 @@
 import xml.etree.ElementTree as ET
 import sys, os
 from collections import namedtuple
+from AbstractLog import AbstractLogsParser
 
-Entry = namedtuple("Entry", ("test", "result"))
+Entry = namedtuple("Entry", ("test", "result", "result_type"))
 list =[]
 
-class MyXmlParser(object):
+class MyXmlParser(AbstractLogsParser):
 # Different test statuses
-    TEST_RES_PASS = 0
-    TEST_RES_FAIL = 1
-    TEST_RES_SKIP = 2
+    # TEST_RES_PASS = 0
+    # TEST_RES_FAIL = 1
+    # TEST_RES_SKIP = 2
     def __init__(self, logs_extension):
         """
         Base class constructor.
@@ -88,7 +89,6 @@ class MyXmlParser(object):
         for i in list:
             print(i)
 
-        raise Exception("process_logs is not implemented")
 
 def main():
     my_parser = MyXmlParser("xml")
