@@ -1,4 +1,5 @@
 **/Q2/test.py
+**/Q2/*.pyc
 *.o
 *.log
 *~
