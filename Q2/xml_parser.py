@@ -6,7 +6,16 @@ from AbstractLog import AbstractLogsParser
 import pandas as pd
 from fpdf import FPDF
 
+import argparse
 
+
+"""
+CLI implementation
+"""
+par = argparse.ArgumentParser(description='Read the input path.')
+par.add_argument("path",help="Enter the address of the root folder")
+args = par.parse_args()
+path = args.path
 
 class MyXmlParser(AbstractLogsParser):
 
@@ -153,7 +162,7 @@ class MyXmlParser(AbstractLogsParser):
 
 def main():
     my_parser = MyXmlParser("xml")
-    my_parser.process_logs('.')
+    my_parser.process_logs(path)
     a = my_parser.get_result_by_type(my_parser.TEST_RES_PASS)
     b = my_parser.get_result_by_type(my_parser.TEST_RES_SKIP)
     c = my_parser.get_result_by_type(my_parser.TEST_RES_FAIL)
