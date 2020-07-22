@@ -141,7 +141,7 @@ class MyXmlParser(AbstractLogsParser):
         for root, dirs, files in os.walk(folder):
             for file in files:
                 if file.endswith(self._logs_ext):
-                    print(os.path.join(root, file))
+                    # print(os.path.join(root, file))
                     path = os.path.join(root, file)
                     doc = ET.parse(path)
                     root = doc.getroot()
@@ -150,13 +150,11 @@ class MyXmlParser(AbstractLogsParser):
                             name = child.get('id')
                             result = child.get('result')
                             type = self.switch(result)
-                            print(name, result, type)
-                            # df['Test ID'].append(name)
-                            # df['Test result'].append(result)
+                            # print(name, result, type)
                             data = self.Entry(test=name,path = path,result=result, result_type = type)
                             self.list.append(data)
-        for i in self.list:
-            print(i)
+        # for i in self.list:
+        #     print(i)
         return list;
 
 
