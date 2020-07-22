@@ -79,7 +79,7 @@ class MyXmlParser(AbstractLogsParser):
         pdf.cell(90, 10, " ", 0, 2, 'C')
         pdf.cell(-10)
         pdf.cell(50, 10, 'Test ID', 1, 0, 'C')
-        pdf.cell(40, 10, 'Test results', 1, 2, 'C')
+        pdf.cell(40, 10, 'Test result', 1, 2, 'C')
         pdf.cell(-50)
         pdf.set_font('arial', '', 12)
 
