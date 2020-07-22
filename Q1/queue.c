@@ -1,7 +1,7 @@
 #include "queue.h"
 
- void init(queue_t* q){
-	printf("Queue initlization \n");
+void init(queue_t* q){
+  printf("Queue initlization \n");
 
   //Initialize elements_counter to zero
   q->elements_counter = (int * )malloc(sizeof(int));
@@ -14,7 +14,6 @@
 
 	/* Initialize pointers. */
 	q->tail = q->head = &q->elements[0];
-
 }
 
 int enqueue(queue_t* q, int val){
@@ -27,7 +26,7 @@ int enqueue(queue_t* q, int val){
   if(*q->elements_counter == 5)  return -1;
 
   (*q->elements_counter)++;
-printf("%d \n", *q->elements_counter );
+  printf("%d \n", *q->elements_counter );
   //Update the pointer of the current element
   nextTail = q->tail + 1;
 
@@ -39,43 +38,42 @@ printf("%d \n", *q->elements_counter );
 	if (nextTail == q->head) {
 
 		return 0;
-	} else {
+	}
+  else {
 		*q->tail = val;
 		q->tail = nextTail;
 		return 1;
 	}
-
 }
 
 int dequeue(queue_t* q, int* val){
- printf("dequeue\n");
+  printf("dequeue\n");
 
-// return an error in case of attempting to remove
-// an element from an empty queue
-if(is_empty(q)== QUEUE_IS_EMPTY) return -1;
-(*q->elements_counter)--;
+  // return an error in case of attempting to remove
+  // an element from an empty queue
+  if(is_empty(q)== QUEUE_IS_EMPTY) return -1;
+  (*q->elements_counter)--;
 
- *val = *(q->head++);
+  *val = *(q->head++);
 
- if (q->head == &q->elements[4]) {
-   /* Wrap around. */
-   q->head = &q->elements[0];
- }
-
- return 1;}
+  if (q->head == &q->elements[4]) {
+    /* Wrap around. */
+    q->head = &q->elements[0];
+  }
+  return 1;
+}
 
 bool is_empty(queue_t* q){
-printf("is empty\n");
-if (*q->elements_counter == 0) {
-  /* Queue is empty. */
-
-  printf("Queue is empty\n");
-  return QUEUE_IS_EMPTY;
-}else {
-  /*Queue is not empty*/
-  printf("Queue is not empty\n");
-  return 0;
-
-}
+  printf("is empty\n");
+  if (*q->elements_counter == 0) {
+    /* Queue is empty. */
+    printf("Queue is empty\n");
+    return QUEUE_IS_EMPTY;
+  }
+  else {
+    /*Queue is not empty*/
+    printf("Queue is not empty\n");
+    return 0;
+  }
 
 }

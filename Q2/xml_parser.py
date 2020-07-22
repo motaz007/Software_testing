@@ -10,7 +10,7 @@ from fpdf import FPDF
 
 class MyXmlParser(AbstractLogsParser):
 
-    Entry = namedtuple("Test", ("test", "result", "result_type"))
+    Entry = namedtuple("Entry", ("test","path", "result", "result_type"))
     list =[]
 
     def __init__(self, logs_extension):
@@ -19,8 +19,8 @@ class MyXmlParser(AbstractLogsParser):
         @param
         logs_extension Extension of log files to parse.
         """
-
-        self._logs_ext = '.'+logs_extension
+        AbstractLogsParser.__init__(self,logs_extension)
+        #self._logs_ext = '.'+logs_extension
 
 
     def switch(self, x):
@@ -46,7 +46,7 @@ class MyXmlParser(AbstractLogsParser):
         """
         count = 0
         for i in self.list:
-            if i[2] == result_type:
+            if i[3] == result_type:
                 count+=1
         return count
 
@@ -63,13 +63,15 @@ class MyXmlParser(AbstractLogsParser):
         df = pd.DataFrame()
         ID = []
         res =[]
+        add =[]
 
         for i in self.list:
             ID.append(i[0])
-            res.append(i[1])
+            res.append(i[2])
+            add.append(i[1])
         df['Test ID'] = ID
+        df['Test path'] = add
         df['Test result'] = res
-
         pdf = FPDF()
         pdf.add_page()
         pdf.set_xy(0, 0)
@@ -77,16 +79,18 @@ class MyXmlParser(AbstractLogsParser):
         pdf.cell(60)
         pdf.cell(75, 10, "Results of the tested software", 0, 2, 'C')
         pdf.cell(90, 10, " ", 0, 2, 'C')
-        pdf.cell(-10)
+        pdf.cell(-30)
         pdf.cell(50, 10, 'Test ID', 1, 0, 'C')
-        pdf.cell(40, 10, 'Test result', 1, 2, 'C')
-        pdf.cell(-50)
+        pdf.cell(70, 10, 'Test path', 1, 0, 'C')
+        pdf.cell(40, 10, 'Test results', 1, 2, 'C')
+        pdf.cell(-120)
         pdf.set_font('arial', '', 12)
 
         for i in range(0, len(df)):
             pdf.cell(50, 10, '%s' % (df['Test ID'].iloc[i]), 1, 0, 'C')
+            pdf.cell(70, 10, '%s' % (str(df['Test path'].iloc[i])), 1, 0, 'C')
             pdf.cell(40, 10, '%s' % (str(df['Test result'].iloc[i])), 1, 2, 'C')
-            pdf.cell(-50)
+            pdf.cell(-120)
 
         pdf.cell(90, 10, " ", 0, 2, 'C')
         pdf.cell(2)
@@ -138,10 +142,13 @@ class MyXmlParser(AbstractLogsParser):
                             result = child.get('result')
                             type = self.switch(result)
                             print(name, result, type)
-                            data = self.Entry(test=name,result=result, result_type = type)
+                            # df['Test ID'].append(name)
+                            # df['Test result'].append(result)
+                            data = self.Entry(test=name,path = path,result=result, result_type = type)
                             self.list.append(data)
         for i in self.list:
             print(i)
+        return list;
 
 
 def main():
