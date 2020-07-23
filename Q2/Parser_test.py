@@ -46,6 +46,8 @@ class TestStringMethods(unittest.TestCase):
         get_result_by_type function test
         It tests that the function returns the correct number for
         different result_type (TEST_RES_FAIL,TEST_RES_PASS, TEST_RES_SKIP)
+        This test uses a predefined path './Q2/gap/conn' and the numbers of passed, skipped
+        and failed tests used in the assertions are based on the predefined path
         @param
         self the testing framwork object
         """
@@ -58,6 +60,8 @@ class TestStringMethods(unittest.TestCase):
         result_fail = self.parser.get_result_by_type(self.parser.TEST_RES_FAIL)
         result_skip = self.parser.get_result_by_type(self.parser.TEST_RES_SKIP)
 
+        #The numbers of these assertions are the expected values
+        # of the test_path
         self.assertEqual(result_pass,2)
         self.assertEqual(result_fail,1)
         self.assertEqual(result_skip,1)

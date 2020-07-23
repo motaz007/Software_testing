@@ -11,16 +11,26 @@ import argparse
 
 """
 CLI implementation
+The CLI takes the path entred after --path
+if  --path isn't used the default folder will be the current one '.'
+@param
+path the directory path
 """
 par = argparse.ArgumentParser(description='Read the input path.')
-par.add_argument("path",help="Enter the address of the root folder")
+par.add_argument('--path', dest='path', default='.')
 args = par.parse_args()
 path = args.path
 
 class MyXmlParser(AbstractLogsParser):
-
-    # Entry = namedtuple("Entry", ("test","path", "result", "result_type"))
-    # list =[]
+    """
+    The following lists will be used to store the
+    attributes of the parsed logs
+    T_ID will store the names of the test from logs
+    T_RES will store the results of the tests (PASS,FAIL,SKIP) from logs
+    T_PATH will store the paths of the tests from logs
+    T_RES_TYPE will store the result_type of the tests from logs (TEST_RES_FAIL,TEST_RES_PASS
+    TEST_RES_SKIP)
+    """
     T_ID = []
     T_RES = []
     T_PATH = []
@@ -151,7 +161,7 @@ class MyXmlParser(AbstractLogsParser):
                     doc = ET.parse(path)
                     root = doc.getroot()
                     for child in root:
-                        if child.get('id'):
+                        if child.get('result'):
                             self.T_ID.append(child.get('id'))
                             self.T_RES.append(child.get('result'))
                             self.T_RES_TYPE.append(self.switch(child.get('result')))
