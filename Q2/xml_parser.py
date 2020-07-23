@@ -19,8 +19,12 @@ path = args.path
 
 class MyXmlParser(AbstractLogsParser):
 
-    Entry = namedtuple("Entry", ("test","path", "result", "result_type"))
-    list =[]
+    # Entry = namedtuple("Entry", ("test","path", "result", "result_type"))
+    # list =[]
+    T_ID = []
+    T_RES = []
+    T_PATH = []
+    T_RES_TYPE = []
 
     def __init__(self, logs_extension):
         """
@@ -31,6 +35,9 @@ class MyXmlParser(AbstractLogsParser):
         AbstractLogsParser.__init__(self,logs_extension)
         #self._logs_ext = '.'+logs_extension
 
+    def __del__(self):
+            #print('Destructor called, Parser deleted.')
+            return None
 
     def switch(self, x):
         """
@@ -54,8 +61,8 @@ class MyXmlParser(AbstractLogsParser):
         Type of results to return.
         """
         count = 0
-        for i in self.list:
-            if i[3] == result_type:
+        for i in self.T_RES_TYPE:
+            if i == result_type:
                 count+=1
         return count
 
@@ -69,18 +76,22 @@ class MyXmlParser(AbstractLogsParser):
         T_fail = self.get_result_by_type(self.TEST_RES_FAIL)
         T_total = T_pass + T_fail + T_skip
 
-        df = pd.DataFrame()
-        ID = []
-        res =[]
-        add =[]
+        if T_total == 0:
+            print("No xml files found")
+            return -1
 
-        for i in self.list:
-            ID.append(i[0])
-            res.append(i[2])
-            add.append(i[1])
-        df['Test ID'] = ID
-        df['Test path'] = add
-        df['Test result'] = res
+        df = pd.DataFrame()
+        # ID = []
+        # res =[]
+        # add =[]
+
+        # for i in self.list:
+        #     ID.append(i[0])
+        #     res.append(i[2])
+        #     add.append(i[1])
+        df['Test ID'] = self.T_ID
+        df['Test path'] = self.T_PATH
+        df['Test result'] = self.T_RES
         pdf = FPDF()
         pdf.add_page()
         pdf.set_xy(0, 0)
@@ -120,9 +131,10 @@ class MyXmlParser(AbstractLogsParser):
         pdf.cell(40, 10, '%s' % (str(T_fail)), 1, 0, 'C')
         pdf.cell(40, 10, '%s' % (str(round(T_fail*100.0/T_total,2))), 1, 2, 'C')
 
-        pdf.output('test.pdf', 'F')
+        pdf.output('test_report.pdf"', 'F')
 
-        print(df)
+        #print(df)
+        return 0
         # raise Exception("generate_detailed_report is not implemented")
 
 
@@ -147,15 +159,21 @@ class MyXmlParser(AbstractLogsParser):
                     root = doc.getroot()
                     for child in root:
                         if child.get('id'):
-                            name = child.get('id')
-                            result = child.get('result')
-                            type = self.switch(result)
+                            self.T_ID.append(child.get('id'))
+                            self.T_RES.append(child.get('result'))
+                            self.T_RES_TYPE.append(self.switch(child.get('result')))
+                            self.T_PATH.append(path)
+        if not self.T_ID:
+            print("No xml file found")
+            return -1
+        else:
+            return 0
                             # print(name, result, type)
-                            data = self.Entry(test=name,path = path,result=result, result_type = type)
-                            self.list.append(data)
+                            #self.data = self.Entry(test=name,path = path,result=result, result_type = type)
+                            #self.list.append(self.data)
         # for i in self.list:
         #     print(i)
-        return list;
+        #return list;
 
 
 def main():
