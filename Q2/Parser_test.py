@@ -1,5 +1,6 @@
 from xml_parser import MyXmlParser, path
 import unittest
+import pathlib as pl
 
 class TestStringMethods(unittest.TestCase):
     parser = None
@@ -106,7 +107,7 @@ class TestStringMethods(unittest.TestCase):
         """
         Test for generate_detailed_report function
         Tests the behaviourof generate_detailed_report by checking its returned
-        value
+        value and that the report file is generated
         @param
         self the testing framwork object
         """
@@ -117,6 +118,9 @@ class TestStringMethods(unittest.TestCase):
             self.assertEqual(self.parser.generate_detailed_report(),0)
         else:
             self.assertEqual(self.parser.generate_detailed_report(),-1)
+
+        report_path = pl.Path("./test_report.pdf")
+        self.assertEquals((str(report_path), report_path.is_file()), (str(report_path), True))
 
 
 

@@ -124,7 +124,7 @@ class MyXmlParser(AbstractLogsParser):
         pdf.cell(40, 10, '%s' % (str(T_fail)), 1, 0, 'C')
         pdf.cell(40, 10, '%s' % (str(round(T_fail*100.0/T_total,2))), 1, 2, 'C')
 
-        pdf.output('test_report.pdf"', 'F')
+        pdf.output('test_report.pdf', 'F')
 
         #print(df)
         return 0
@@ -161,7 +161,7 @@ class MyXmlParser(AbstractLogsParser):
             return -1
         else:
             return 0
-    
+
 
 
 def main():
