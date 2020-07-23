@@ -10,7 +10,6 @@ class TestStringMethods(unittest.TestCase):
         self.parser.T_RES = []
         self.parser.T_PATH = []
         self.parser.T_RES_TYPE = []
-        # self.parser.process_logs(path)
 
 
     def test_init(self):
@@ -18,7 +17,7 @@ class TestStringMethods(unittest.TestCase):
         initlization function test
         it checks for the creation of MyXmlParser object
         @param
-        self the test object
+        self the testing framwork object
         """
         self.assertIsNotNone(self.parser)
 
@@ -29,7 +28,7 @@ class TestStringMethods(unittest.TestCase):
         it tests the correctness of the switch function behaviour
         with its differnt arguments (PASS, SKIP,FAIL)
         @param
-        self the test object
+        self the testing framwork object
         """
 
         switch_pass = self.parser.switch("PASS")
@@ -47,7 +46,7 @@ class TestStringMethods(unittest.TestCase):
         It tests that the function returns the correct number for
         different result_type (TEST_RES_FAIL,TEST_RES_PASS, TEST_RES_SKIP)
         @param
-        self the test object
+        self the testing framwork object
         """
         self.parser = self.parser.__del__()
         self.parser = MyXmlParser("xml")
@@ -65,6 +64,12 @@ class TestStringMethods(unittest.TestCase):
 
 
     def test_None_object(self):
+        """
+        Destructor test
+        It tests that when the behaviour of __del__ function of the object
+        @param
+        self the testing framwork object
+        """
         self.parser = self.parser.__del__()
         self.assertIsNone(self.parser)
 
@@ -98,7 +103,13 @@ class TestStringMethods(unittest.TestCase):
 
 
     def test_generate_detailed_report(self):
-
+        """
+        Test for generate_detailed_report function
+        Tests the behaviourof generate_detailed_report by checking its returned
+        value
+        @param
+        self the testing framwork object
+        """
         self.parser.process_logs(path)
 
         #Test the return value of the function when there is/n't xml files
