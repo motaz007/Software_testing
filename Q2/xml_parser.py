@@ -81,14 +81,7 @@ class MyXmlParser(AbstractLogsParser):
             return -1
 
         df = pd.DataFrame()
-        # ID = []
-        # res =[]
-        # add =[]
 
-        # for i in self.list:
-        #     ID.append(i[0])
-        #     res.append(i[2])
-        #     add.append(i[1])
         df['Test ID'] = self.T_ID
         df['Test path'] = self.T_PATH
         df['Test result'] = self.T_RES
@@ -168,12 +161,7 @@ class MyXmlParser(AbstractLogsParser):
             return -1
         else:
             return 0
-                            # print(name, result, type)
-                            #self.data = self.Entry(test=name,path = path,result=result, result_type = type)
-                            #self.list.append(self.data)
-        # for i in self.list:
-        #     print(i)
-        #return list;
+    
 
 
 def main():
