@@ -12,12 +12,13 @@ void init(queue_t* q, int size){
   //Initialize size of the buffer
   // q->max = (int * )malloc(sizeof(int));
   q->max = size;
-
+  q->status = QUEUE_IS_EMPTY;
 	/* Allocate space for the elements of the queue.*/
 	q->elements = (int * )malloc(size * sizeof(int));
 
 	/* Initialize pointers. */
 	q->tail = q->head = &q->elements[0];
+
 }
 
 /**
@@ -44,19 +45,24 @@ int enqueue(queue_t* q, int val){
 	if (nextTail == &q->elements[(q->max)]) {
 		/* Wrap around. */
 		nextTail = &q->elements[0];
+
 	}
 
-  //If the tail reaches the head the queue is full
-	if (nextTail == q->head)
+  //If the tail reaches the head, the queue is full
+	if (nextTail == q->head )
   {
-    q->full = true;
-		return 0;
-	}else
-  {
+      q->full = true;
+      q->status = QUEUE_IS_FULL;
+      *q->tail = val;
+
+      return 0;
+
+  }else{
+
 		*q->tail = val;
 		q->tail = nextTail;
-		return 1;
-	}
+    return 1;
+  }
 }
 
 /**
@@ -67,20 +73,30 @@ int enqueue(queue_t* q, int val){
 */
 int dequeue(queue_t* q, int* val){
   //Debug: printf("dequeue\n");
+  int volatile* nextHead;
+
 
   // return an error in case of attempting to remove
   // an element from an empty queue
   if(is_empty(q)) return -1;
 
 
-  q->full = false;
-  *val = *(q->head++);
+  *val = *q->head;
+   nextHead = q->head + 1;
 
-  if (q->head == &q->elements[q->max]) {
+  if (nextHead == &q->elements[q->max]) {
     /* Wrap around. */
-    q->head = &q->elements[0];
+    nextHead = &q->elements[0];
   }
-  return 1;
+
+  if(q->head == q->tail && (q->status != QUEUE_IS_EMPTY)){
+    q->status = QUEUE_IS_EMPTY;
+    return 0;
+  }else{
+    q->head = nextHead;
+    return 1;
+
+  }
 }
 
 /**
@@ -89,6 +105,10 @@ int dequeue(queue_t* q, int* val){
 */
 bool is_empty(queue_t* q)
 {
-  printf("is empty\n");
-  return !(q->full);
+  //debug printf("is empty\n");
+  if(q->status == QUEUE_IS_EMPTY)
+    return 1;
+  else{
+    return 0;
+  }
 }

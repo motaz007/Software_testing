@@ -17,6 +17,7 @@ struct queue {
 	int volatile* head;
   int max;
   bool full;
+	int status;
 };
 
 

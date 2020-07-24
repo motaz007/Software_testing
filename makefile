@@ -5,7 +5,7 @@ INCLUDES=-I/Q1
 
 SRCS = Q1/main.c Q1/queue.c
 OBJS = $(SRCS:.c=.o)
-MAIN = Unit_Tests
+MAIN = SW_Tests
 
 
 
