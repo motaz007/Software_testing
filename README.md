@@ -12,11 +12,14 @@ pip install -r requirements.txt
 ## Usage:
 
 * To run the test for the C code in Q1:
-[a relative link](Q1/ReadMe.md)
+
+[ReadMe file of Q1](Q1/ReadMe.md)
+
  use the makefile which will generate the executable Unit_Tests
 
 * To run the python scripts in Q2:
-[a relative link](Q2/ReadMe.md)
+
+[ReadMe file of Q2](Q2/ReadMe.md)
 
   - To run the test for python code in Q2:
   use the following command line interface:
