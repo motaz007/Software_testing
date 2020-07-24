@@ -29,7 +29,9 @@ pip install -r requirements.txt
 * Run the test for the C code in Q1:
 
  use the makefile which will generate the executable Unit_Tests.
-
+ ```bash
+ make
+ ```
 * Run the python scripts in Q2:
 
   - To run the test for python code in Q2:
