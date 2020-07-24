@@ -5,7 +5,7 @@ This is directory contains the solution of the here [assignment](SW_and_HW_funct
 
 
 
-## Installation
+## Requirements
 
 To download the necessary libraries for the python scripts
 
@@ -27,11 +27,9 @@ pip install -r requirements.txt
 ## Usage:
 
 * Run the test for the C code in Q1:
-
- use the makefile which will generate the executable Unit_Tests
+ use the makefile which will generate the executable Unit_Tests.
 
 * Run the python scripts in Q2:
-
 
   - To run the test for python code in Q2:
   use the following command line interface:
@@ -39,8 +37,7 @@ pip install -r requirements.txt
   ```bash
   python Q2/parser_test.py [--path path]
   ```
-
-  If no path is selected the default path will be the current
+  If no path is selected the default path will be the current directory.
 
   - To run the python implementation of the xml_parser:
   use the following CLI:
@@ -49,4 +46,4 @@ pip install -r requirements.txt
   python Q2/xml_parser.py [--path path]
   ```
 
-  If no path is selected the default path will be the current
+  If no path is selected the default path will be the current.
