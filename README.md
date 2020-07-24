@@ -27,13 +27,14 @@ pip install -r requirements.txt
 ## Usage:
 
 * Run the test for the C code in Q1:
+
  use the makefile which will generate the executable Unit_Tests.
 
 * Run the python scripts in Q2:
 
   - To run the test for python code in Q2:
-  use the following command line interface:
 
+  use the following command line interface:
   ```bash
   python Q2/parser_test.py [--path path]
   ```
@@ -41,7 +42,6 @@ pip install -r requirements.txt
 
   - To run the python implementation of the xml_parser:
   use the following CLI:
-
   ```bash
   python Q2/xml_parser.py [--path path]
   ```
