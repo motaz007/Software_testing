@@ -51,11 +51,11 @@ class MyXmlParser(AbstractLogsParser):
 
     def switch(self, x):
         """
-        implementation of switch-expression
+        @brief implementation of switch-expression
         Returns result types of a test TEST_RES_SKIP, TEST_RES_FAIL or TEST_RES_PASS
         @param
-        x
-        the test result from the log file
+        x the test result from the log file
+        self parser object
         """
         return {
          "PASS": self.TEST_RES_PASS,
@@ -65,10 +65,10 @@ class MyXmlParser(AbstractLogsParser):
 
     def get_result_by_type(self, result_type):
         """
-        Returns number of passed, failed or skipped tests.
+        @brief Returns number of passed, failed or skipped tests.
         @param
-        result_type
-        Type of results to return.
+        result_type Type of results to return.
+        self parser object
         """
         count = 0
         for i in self.T_RES_TYPE:
@@ -79,7 +79,9 @@ class MyXmlParser(AbstractLogsParser):
 
     def generate_detailed_report(self):
         """
-        Generates detailed report on each test suite.
+        @brief Generates detailed report on each test suite.
+        @param
+        self the parser object
         """
         T_pass = self.get_result_by_type(self.TEST_RES_PASS)
         T_skip = self.get_result_by_type(self.TEST_RES_SKIP)
@@ -143,10 +145,10 @@ class MyXmlParser(AbstractLogsParser):
 
     def process_logs(self, folder):
         """
-        Parses all log files with target extension in the specified folder.
+        @brief Parses all log files with target extension in the specified folder.
         @param
-        folder
-        Folder to look up for log files.
+        folder Folder to look up for log files.
+        self parser object
         """
 
         """

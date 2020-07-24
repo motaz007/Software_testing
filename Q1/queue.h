@@ -12,16 +12,17 @@
 #define QUEUE_IS_FULL 2
 
 struct queue {
-  int* elements_counter;
 	int* elements;
 	int volatile* tail;
 	int volatile* head;
+  int max;
+  bool full;
 };
 
 
 typedef struct queue queue_t;
 
-void init(queue_t* q);
+void init(queue_t* q, int size);
 int enqueue(queue_t* q, int val);
 int dequeue(queue_t* q, int* val);
 bool is_empty(queue_t* q);

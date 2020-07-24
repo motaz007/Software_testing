@@ -15,7 +15,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_init(self):
         """
-        initlization function test
+        @brief initlization function test
         it checks for the creation of MyXmlParser object
         @param
         self the testing framwork object
@@ -25,7 +25,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_switch(self):
         """
-        switch function test
+        @brief switch function test
         it tests the correctness of the switch function behaviour
         with its differnt arguments (PASS, SKIP,FAIL)
         @param
@@ -43,7 +43,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_get_result_by_type(self):
         """
-        get_result_by_type function test
+        @brief get_result_by_type function test
         It tests that the function returns the correct number for
         different result_type (TEST_RES_FAIL,TEST_RES_PASS, TEST_RES_SKIP)
         This test uses a predefined path './Q2/gap/conn' and the numbers of passed, skipped
@@ -70,7 +70,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_None_object(self):
         """
-        Destructor test
+        @brief Destructor test
         It tests that when the behaviour of __del__ function of the object
         @param
         self the testing framwork object
@@ -80,7 +80,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_process_logs(self):
         """
-        Test for process_logs function
+        @brief Test for process_logs function
         @param
         self the testing framwork object
         """
@@ -109,7 +109,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_generate_detailed_report(self):
         """
-        Test for generate_detailed_report function
+        @brief Test for generate_detailed_report function
         Tests the behaviourof generate_detailed_report by checking its returned
         value and that the report file is generated
         @param
