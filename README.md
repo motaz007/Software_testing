@@ -20,15 +20,15 @@ pip install -r requirements.txt
 
   1. Q2: which contains the solution of the second task and it is written in python.
 
-  The following [ReadMe file](Q2/ReadMe.md) contains a description of that solution.
+      The following [ReadMe file](Q2/ReadMe.md) contains a description of that solution.
 
 ## Usage:
 
-* To run the test for the C code in Q1:
+* Run the test for the C code in Q1:
 
  use the makefile which will generate the executable Unit_Tests
 
-* To run the python scripts in Q2:
+* Run the python scripts in Q2:
 
 
   - To run the test for python code in Q2:
