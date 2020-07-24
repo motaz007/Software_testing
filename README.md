@@ -15,9 +15,12 @@ pip install -r requirements.txt
 
   There are two folders:
   1. Q1: which contains the solution of the first task and it is written in C.
-      The following [ReadMe file](Q1/ReadMe.md) contains a description of that solution
-  1. Q2: which contains the solution of the second task and it is written in python
-  The following [ReadMe file](Q2/ReadMe.md) contains a description of that solution
+
+      The following [ReadMe file](Q1/ReadMe.md) contains a description of that solution.
+
+  1. Q2: which contains the solution of the second task and it is written in python.
+
+  The following [ReadMe file](Q2/ReadMe.md) contains a description of that solution.
 
 ## Usage:
 
